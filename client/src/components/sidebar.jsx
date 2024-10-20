@@ -1,45 +1,43 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FaChartBar, FaHome, FaUser, FaCog } from 'react-icons/fa';
-
+import { NavLink } from 'react-router-dom';
+import { FaChartBar, FaUser, FaCog } from 'react-icons/fa';
+import LogoutButton from './logout';
+import LoginButton from './login';
+import { useAuth0 } from '@auth0/auth0-react';
 export default function Sidebar() {
-  const [activeItem, setActiveItem] = useState(null); // Track the clicked item
-
-  const handleClick = (route) => {
-    setActiveItem(route);
-  };
-
-  const getItemClass = (route) => 
-    `flex items-center space-x-2 hover:bg-secondary ${
-      activeItem === route ? 'bg-secondary' : ''
-    }`;
+  const { user, isAuthenticated } = useAuth0()
 
   return (
-    <ul className="menu bg-gray-800 text-white w-80 p-4">
-      <li className={getItemClass('/home')} onClick={() => handleClick('/home')}>
-        <Link to="/home" className="w-full flex items-center">
-          <FaHome />
-          <span>Home</span>
-        </Link>
-      </li>
-      <li className={getItemClass('/dashboard')} onClick={() => handleClick('/dashboard')}>
-        <Link to="/dashboard" className="w-full flex items-center">
-          <FaChartBar />
-          <span>Dashboard</span>
-        </Link>
-      </li>
-      <li className={getItemClass('/profile')} onClick={() => handleClick('/profile')}>
-        <Link to="/profile" className="w-full flex items-center">
-          <FaUser />
-          <span>Profile</span>
-        </Link>
-      </li>
-      <li className={getItemClass('/settings')} onClick={() => handleClick('/settings')}>
-        <Link to="/settings" className="w-full flex items-center">
-          <FaCog />
-          <span>Settings</span>
-        </Link>
-      </li>
-    </ul>
+    <div className='w-64 h-screen bg-gray-800'>
+      <ul className="menu text-white p-4">
+        <li>
+          <NavLink to="/dashboard" className="w-full flex items-center">
+            <FaChartBar />
+            <span>Dashboard</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/property" className="w-full flex items-center">
+            <FaChartBar />
+            <span>Property</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/profile" className="w-full flex items-center">
+            <FaUser />
+            <span>Profile</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/settings" className="w-full flex items-center">
+            <FaCog />
+            <span>Settings</span>
+          </NavLink>
+        </li>
+        <li>
+          {isAuthenticated ? <LogoutButton /> : <LoginButton />}
+        </li>
+      </ul>
+    </div>
   );
 }
