@@ -1,14 +1,12 @@
 import express from 'express';
-import { config } from 'dotenv';
+import * as dotenv from 'dotenv';
 import connectDB from './database/connect.js';
 import cors from 'cors';
 import userRouter from './routes/user.routes.js';
 import propertyRouter from './routes/property.routes.js';
 
+dotenv.config()
 const app = express();
-config({
-    path:"./data/config.env"
-});
 
 app.use(cors());
 app.use(express.json({limit:"50mb"}))
@@ -25,7 +23,6 @@ app.use("/api/v1/properties", propertyRouter);
 const startServer = async () =>{
     try{
         connectDB(process.env.MONGODB_URI);
-        
         app.listen(5000,()=>{
             console.log("server running on port")
         })
