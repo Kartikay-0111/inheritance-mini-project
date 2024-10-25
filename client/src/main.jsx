@@ -13,6 +13,8 @@ createRoot(document.getElementById('root')).render(
       authorizationParams={{
         redirect_uri: window.location.origin
       }}
+      audience="Hello my name is root"
+      scope="openid profile email"
     >
       <App />
     </Auth0Provider>

@@ -7,6 +7,8 @@ import userRouter from './routes/user.routes.js';
 import propertyRouter from './routes/property.routes.js';
 import axios from 'axios'
 import {auth} from 'express-oauth2-jwt-bearer';
+// var request = require("request");
+// import request from 'request';
 dotenv.config()
 const app = express();
 
@@ -20,16 +22,13 @@ app.use(cors({
 // app.use(express.json({limit:"50mb"}))
 
 const jwtCheck = auth({
+  secret: 'fpAlOw77r5fS3dEfgQhRrRub1I6qs6lS',
   audience: 'Hello my name is root',
   issuerBaseURL: 'https://dev-5ut1c8i2k4aukccx.us.auth0.com/',
-  tokenSigningAlg: 'RS256'
+  tokenSigningAlg: 'HS256'
 });
 
-app.get('/not', (req, res) => { 
-  res.send('Hello from unprotected route');
-});
-
-app.use(jwtCheck);
+// app.use(jwtCheck);
 
 // app.get('/',(req,res)=>{
 //     res.send({
@@ -39,8 +38,11 @@ app.use(jwtCheck);
 
 // app.use("/api/v1/users", userRouter);
 // app.use("/api/v1/properties", propertyRouter);
+app.get('/not', (req, res) => { 
+  res.send('Hello from unprotected route');
+});
 
-app.get('/protected',(req, res) => {
+app.get('/protected',jwtCheck, (req, res) => {
   // console.log(req.headers.authorization);
   res.send('Hello from protected route');
 });

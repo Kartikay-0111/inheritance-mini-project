@@ -5,6 +5,8 @@ import Sidebar from './components/sidebar'
 import Dashboard from './components/dashboard';
 import { useAuth0 } from "@auth0/auth0-react"
 import Profile from './components/profile';
+import Property from './components/property';
+import Setting from './components/Setting';
 function App() {
   const { user, isAuthenticated } = useAuth0()
 
@@ -12,7 +14,9 @@ function App() {
     createRoutesFromElements(
       <Route path="/" element={<Root />} >
         <Route path='/profile' index element={<Profile />} />
-        <Route path='/dashboard' index element={<Dashboard />}  />
+        <Route path='/' index element={<Dashboard />}  />
+        <Route path='/property' index element={<Property />}  />
+        <Route path='/setting' index element={<Setting />}  />
       </Route>
     )
   )
@@ -26,7 +30,7 @@ function App() {
     return (
       <>
         <Navbar />
-        <div className='flex felx-col'>
+        <div className='flex flex-row'>
           <Sidebar />
           <Outlet />
         </div>

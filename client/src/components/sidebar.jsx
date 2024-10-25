@@ -6,12 +6,12 @@ import LoginButton from './login';
 import { useAuth0 } from '@auth0/auth0-react';
 export default function Sidebar() {
   const { user, isAuthenticated } = useAuth0()
-
+//  console.log(user)
   return (
     <div className='w-64 h-screen bg-gray-800'>
       <ul className="menu text-white p-4">
         <li>
-          <NavLink to="/dashboard" className="w-full flex items-center">
+          <NavLink to="/" className="w-full flex items-center">
             <FaChartBar />
             <span>Dashboard</span>
           </NavLink>
@@ -29,7 +29,7 @@ export default function Sidebar() {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/settings" className="w-full flex items-center">
+          <NavLink to="/setting" className="w-full flex items-center">
             <FaCog />
             <span>Settings</span>
           </NavLink>
