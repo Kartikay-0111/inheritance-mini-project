@@ -1,9 +1,14 @@
-import { useAuth0 } from "@auth0/auth0-react";
+// LoginButton.js
 import React from "react";
+import { GoogleLogin } from "@react-oauth/google";
+import { useAuth } from "../context/authContext";
 
 const LoginButton = () => {
-  const { loginWithRedirect } = useAuth0();
-  return <button className="btn btn-primary" onClick={() => loginWithRedirect()}>Log In</button>;
+  const { login } = useAuth();
+
+  return (
+    <GoogleLogin onSuccess={login} onError={() => console.log("Login Failed")} />
+  );
 };
 
 export default LoginButton;

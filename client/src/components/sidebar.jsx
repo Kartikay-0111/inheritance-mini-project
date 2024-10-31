@@ -3,10 +3,11 @@ import { NavLink } from 'react-router-dom';
 import { FaChartBar, FaUser, FaCog } from 'react-icons/fa';
 import LogoutButton from './logout';
 import LoginButton from './login';
-import { useAuth0 } from '@auth0/auth0-react';
+import { useAuth } from '../context/authContext';
+
 export default function Sidebar() {
-  const { user, isAuthenticated } = useAuth0()
-//  console.log(user)
+  const { user } = useAuth();
+  //  console.log(user)
   return (
     <div className='w-64 h-screen bg-gray-800'>
       <ul className="menu text-white p-4">
@@ -35,7 +36,7 @@ export default function Sidebar() {
           </NavLink>
         </li>
         <li>
-          {isAuthenticated ? <LogoutButton /> : <LoginButton />}
+          {user ? <LogoutButton /> : <LoginButton />}
         </li>
       </ul>
     </div>

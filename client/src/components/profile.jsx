@@ -1,48 +1,44 @@
-import { useAuth0 } from "@auth0/auth0-react";
 import React from "react";
-import axios from "axios";
+import { useAuth } from "../context/authContext";
+
 const Profile = () => {
-  const { user, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
-
-  if (isLoading) {
-    return <div>Loading ...</div>;
-  }
-  function callApi() {
-    axios
-      .get("http://localhost:5000/not")
-      .then(response => console.log(response.data))
-      .catch(e => console.log(e))
-  }
-
-  async function callProtectedApi() {
+  const token = localStorage.getItem("token");
+  const {user} = useAuth();
+  console.log(user)
+  async function fetchProtectedData(token) {
     try {
-      const token = await getAccessTokenSilently({
-        audience: 'Hello my name is root'
-      });
-      console.log("Token : ")
-      console.log(token.toString())
-      const response = await axios.get("http://localhost:5000/protected", {
+      const response = await fetch("http://localhost:5000/protected", {
+        method: "GET",
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data);
-    }
-    catch (e) {
-      console.log(`error message ${e.message}`);
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch protected data");
+      }
+
+      const data = await response.json();
+      console.log("Protected data:", data);
+    } catch (error) {
+      console.error("Error:", error);
     }
   }
+
   return (
-    isAuthenticated && (
-      <div className=" h-60 w-48 bg-gray-200 rounded-xl flex flex-col m-auto">
-        <img className="w-2/3 h-1/2 m-auto" src={user.picture} alt={user.name} />
-        <h2 className="p-2 font-bold text-2xl">{user.name}</h2>
-        <p className="p-2">{user.email}</p>
-        <div>
-          <button onClick={callApi}  >Call api</button>
-          <br />
-          <button onClick={callProtectedApi} >Call protected api</button>
+    user && (
+      <div className="w-full flex justify-center">
+        <div className="h-70 w-48 bg-gray-200 rounded-xl flex flex-col m-auto">
+          <img className="w-2/3 h-1/2 m-auto" src={user.picture} alt={user.name} />
+          <h2 className="p-2 font-bold text-2xl">{user.name}</h2>
+          <p className="p-2">{user.email}</p>
+          <button
+            onClick={() => fetchProtectedData(token)}
+            className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4"
+          >
+            Call Protected Route
+          </button>
         </div>
       </div>
     )
