@@ -1,3 +1,14 @@
 .menu li{
     margin: 10px 0px;
 }
+::-webkit-scrollbar{
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track{
+    width: 10px;
+    background-color: #508adc8f;
+  }
+  ::-webkit-scrollbar-thumb{
+    background-color: rgba(163, 23, 51, 0.916);
+    border-radius: 5px;
+  }

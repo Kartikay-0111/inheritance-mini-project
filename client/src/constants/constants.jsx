@@ -1,4 +1,4 @@
-export const propertyReferralsInfo = [
+const propertyReferralsInfo = [
     {
       title: 'Social Media',
       percentage: 64,
@@ -25,3 +25,4 @@ export const propertyReferralsInfo = [
       color: '#F45252',
     },
   ];
+  export default propertyReferralsInfo;

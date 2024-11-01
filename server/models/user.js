@@ -6,7 +6,6 @@ const UserSchema = new mongoose.Schema({
     email: { type: String, require: true },
     avatar: {type:String, require: true},
     allproperties: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Property' }],   //one user can have multiple proerties-->[]
-
 })
 
 export const User = mongoose.model("User", UserSchema);;

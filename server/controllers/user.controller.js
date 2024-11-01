@@ -5,9 +5,7 @@ const getAllUsers = async (req,res) =>{
     
 }
 const createUser = async (req,res) =>{
-  
   try{
-    console.log("hi")
     if (!req.auth || !req.auth.payload) {
       return res.status(400).json({ message: "Authentication payload not found" });
     }

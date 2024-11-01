@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaSearch,FaUmbrella } from 'react-icons/fa';
 import { yariga, logo } from '../assets';
+import { useAuth0 } from '@auth0/auth0-react';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+ const {user,isAuthenticated}  =useAuth0()
   return (
-        <nav className="bg-gray-800 p-4">
+        <nav className="bg-gray-800 p-4 h-16 w-full">
     <div className="container flex justify-between items-center">
         {/* Logo */}
         <div>
@@ -40,8 +41,8 @@ const Navbar = () => {
         <div className='flex flex-row gap-3'>
         <FaSearch className='text-white m-auto h-7 w-7' />
         <input type="text" placeholder='Search propreties..'/>
-        <img src={logo} alt="profile" />
-        <p className='text-white'>Username</p>
+        {isAuthenticated && <img className='h-5/6 w-9' src={user.picture} alt="profile" />}
+        {isAuthenticated && <p className='text-white'>{user.name}</p>}
         </div> 
       </div>
     </nav>
