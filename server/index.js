@@ -4,43 +4,14 @@ import connectDB from './database/connect.js';
 import cors from 'cors';
 import userRouter from './routes/user.routes.js';
 import propertyRouter from './routes/property.routes.js';
-<<<<<<< Updated upstream
-=======
 import axios from 'axios'
 import {auth} from 'express-oauth2-jwt-bearer';
 import jwtCheck from './middleware/jwtcheck.js';
 
->>>>>>> Stashed changes
 
 dotenv.config()
 const app = express();
 
-<<<<<<< Updated upstream
-app.use(cors());
-app.use(express.json({limit:"50mb"}))
-
-app.get('/',(req,res)=>{
-    res.send({
-        message:"hello"
-    });
-})
-
-app.use("/api/v1/users", userRouter);
-app.use("/api/v1/properties", propertyRouter);
-
-const startServer = async () =>{
-    try{
-        connectDB(process.env.MONGODB_URI);
-        app.listen(5000,()=>{
-            console.log("server running on port")
-        })
-    }
-    catch(e){
-        console.log(e);
-    }
-}
-startServer();
-=======
 // app.use(cors());
 app.use(cors({
   origin: 'http://localhost:5173',  // Frontend origin
@@ -72,7 +43,6 @@ app.use((err, req, res, next) => {
   });
 });
 
->>>>>>> Stashed changes
 
 try{
   connectDB(process.env.MONGODB_URI)
