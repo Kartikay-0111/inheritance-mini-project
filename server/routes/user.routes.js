@@ -1,10 +1,12 @@
 import express from "express";
 import { getAllUsers,createUser,getUserById } from "../controllers/user.controller.js";
+import jwtCheck from "../middleware/jwtcheck.js";
 
 const userRouter = express.Router();
+// userRouter.use(jwtCheck);
 
-userRouter.get("/",getAllUsers)
+// userRouter.get("/",getAllUsers)
 userRouter.get("/:id",getUserById)
-userRouter.get("/",createUser)
+userRouter.post("/",createUser)
 
 export default userRouter;

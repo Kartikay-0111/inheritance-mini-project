@@ -5,23 +5,21 @@ import Sidebar from './components/sidebar'
 import Dashboard from './components/dashboard';
 import Profile from './components/profile';
 import Property from './components/property';
-import { Error } from './components/Error';
 import Setting from './components/Setting';
-import CreateProperty from './components/CreateProperty';
-import AuthProvider from './context/authContext';
+import UserCreationForm from './components/usercreateform';
 function App() {
 
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Root />}  >
         <Route path='/profile' index element={<Profile />} />
-        <Route path='/' index element={<Dashboard />} />
-        <Route path='/property' index element={<Property />} />
-        <Route path='/property/create' index element={<CreateProperty />} />
-        <Route path='/setting' index element={<Setting />} />
+        <Route path='/' index element={<Dashboard />}  />
+        <Route path='/property' element={<Property />}  />
+        <Route path='/setting' element={<Setting />}  />
+        <Route path='/user-form' element={<UserCreationForm/>}/>
       </Route>
     )
-  )
+  );
   return (
     <div className="App ">
       <RouterProvider router={router} />
@@ -30,7 +28,6 @@ function App() {
 }
 const Root = () => {
   return (
-    <AuthProvider>
       <>
         <Navbar />
         <div className='flex flex-row'>
@@ -38,7 +35,6 @@ const Root = () => {
           <Outlet />
         </div>
       </>
-    </AuthProvider>
   )
 }
 export default App;
