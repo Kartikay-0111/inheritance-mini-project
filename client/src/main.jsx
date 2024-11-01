@@ -24,11 +24,6 @@ createRoot(document.getElementById('root')).render(
         audience:"http://localhost",
         scope:"openid profile email",
       }}
-<<<<<<< Updated upstream
-=======
-      // onRedirectCallback={onRedirectCallback}
-      
->>>>>>> Stashed changes
     >
       <App />
     </Auth0Provider>

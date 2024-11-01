@@ -5,27 +5,23 @@ import Sidebar from './components/sidebar'
 import Dashboard from './components/dashboard';
 import { useAuth0 } from "@auth0/auth0-react"
 import Profile from './components/profile';
-<<<<<<< Updated upstream
-=======
-import Property from './components/property';
-import Setting from './components/Setting';
+
+import Property from './components/propretyref';
+
 import UserCreationForm from './components/usercreateform';
->>>>>>> Stashed changes
+
 function App() {
   const { user, isAuthenticated } = useAuth0()
 
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Root />} >
-        <Route path='/profile' index element={<Profile />} />
-<<<<<<< Updated upstream
-        <Route path='/dashboard' index element={<Dashboard />}  />
-=======
         <Route path='/' index element={<Dashboard />}  />
+        <Route path='/dashboard' element={<Dashboard/>}/>
+        <Route path='/profile' element={<Profile />} />
         <Route path='/property' element={<Property />}  />
-        <Route path='/setting' element={<Setting />}  />
+        {/* <Route path='/setting' element={<Setting />}  /> */}
         <Route path='/user-form' element={<UserCreationForm/>}/>
->>>>>>> Stashed changes
       </Route>
     )
   );
@@ -39,7 +35,7 @@ function App() {
     return (
       <>
         <Navbar />
-        <div className='flex felx-col'>
+        <div className='flex'>
           <Sidebar />
           <Outlet />
         </div>
