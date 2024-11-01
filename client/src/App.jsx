@@ -5,6 +5,12 @@ import Sidebar from './components/sidebar'
 import Dashboard from './components/dashboard';
 import { useAuth0 } from "@auth0/auth0-react"
 import Profile from './components/profile';
+<<<<<<< Updated upstream
+=======
+import Property from './components/property';
+import Setting from './components/Setting';
+import UserCreationForm from './components/usercreateform';
+>>>>>>> Stashed changes
 function App() {
   const { user, isAuthenticated } = useAuth0()
 
@@ -12,10 +18,17 @@ function App() {
     createRoutesFromElements(
       <Route path="/" element={<Root />} >
         <Route path='/profile' index element={<Profile />} />
+<<<<<<< Updated upstream
         <Route path='/dashboard' index element={<Dashboard />}  />
+=======
+        <Route path='/' index element={<Dashboard />}  />
+        <Route path='/property' element={<Property />}  />
+        <Route path='/setting' element={<Setting />}  />
+        <Route path='/user-form' element={<UserCreationForm/>}/>
+>>>>>>> Stashed changes
       </Route>
     )
-  )
+  );
   return (
     <div className="App ">
       <RouterProvider router={router} />
