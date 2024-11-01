@@ -1,6 +1,6 @@
 // AuthContext.js
 import React, { createContext, useState, useContext, useEffect } from "react";
-import { GoogleLogin, googleLogout } from "@react-oauth/google";
+import { googleLogout } from "@react-oauth/google";
 import {jwtDecode} from "jwt-decode";
 
 const AuthContext = createContext();
