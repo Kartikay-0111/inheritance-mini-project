@@ -10,7 +10,7 @@ import {auth} from 'express-oauth2-jwt-bearer';
 import jwtCheck from './middleware/jwtcheck.js';
 dotenv.config()
 const app = express();
-
+app.use(express.json());
 app.use(cors({
   origin: 'http://localhost:5173',  // Frontend origin
   credentials: true,  // Allow credentials
@@ -19,16 +19,13 @@ app.use(cors({
 
 app.use(jwtCheck);
 
-// app.use("/api/v1/users", userRouter);
-// app.use("/api/v1/properties", propertyRouter);
-app.get('/not', (req, res) => { 
-  res.send('Hello from unprotected route');
-});
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/properties", propertyRouter);
 
-app.get('/protected',jwtCheck, (req, res) => {
-  console.log(req.headers.authorization);
-  res.send('Hello from protected route');
-});
+// app.get('/protected',jwtCheck, (req, res) => {
+//   console.log(req.headers.authorization);
+//   res.send('Hello from protected route');
+// });
 
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
