@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-
+import { useAuth0} from '@auth0/auth0-react';
+import axios from 'axios';
+import { Navigate } from 'react-router-dom';
 const CreateProperty = () => {
+    const { user, getAccessTokenSilently } = useAuth0();
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -18,7 +21,7 @@ const CreateProperty = () => {
             [name]: type === 'file' ? files[0] : value,
         });
     };
-const handleSubmit = async (e) =>{
+    const handleSubmit = async (e) =>{
     e.preventDefault();
     if (!user) {
         setError("You must login first")
@@ -32,15 +35,34 @@ const handleSubmit = async (e) =>{
     // Processing form data (e.g., logging or sending to a backend)
     console.log("Form Data:", formData);
 
+    const data = new FormData();
+    for (const key in formData) {
+        data.append(key, formData[key]); // Append each form field to the FormData object
+    }
+    // for (var pair of data.entries()) {
+    //     console.log(pair[0] + ', ' + pair[1]);
+    // }
     try {
-        const response = await fetch('http://localhost/5000/', {
-            method: 'POST',
-            body: JSON.stringify(formData),
-            headers: {
-                'Content-Type': 'application/json',
+        const token = await getAccessTokenSilently({
+            audience: 'http://localhost',
+            scope: 'openid profile email',
+          });
+          console.log(token);
+
+
+       
+        const response = await axios.post(
+            'http://localhost:3000/api/v1/properties',
+            data,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
             }
-        });
-        const json = await response.json()
+          );
+
+        const json = await response.data;
+        console.log(json);
         if (!response.ok) {
             setError(json.error)
         }

@@ -1,9 +1,21 @@
-import React from 'react'
-
+import React, { useState } from 'react';
+import CreateProperty from './CreateProperty.jsx';
 const Property = () => {
-  return (
-    <div>property</div>
-  )
-}
+  const [showForm, setShowForm] = useState(false);
 
-export default Property
+  const handleClick = () => {
+    setShowForm(true); // Show the form when "Create" button is clicked
+  };
+
+  return (
+    <div>
+      {!showForm ? (
+        <button onClick={handleClick}>Create</button>
+      ) : (
+        <CreateProperty/>
+      )}
+    </div>
+  );
+};
+
+export default Property;

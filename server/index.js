@@ -1,6 +1,5 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
-import mongoose from 'mongoose';
 import connectDB from './database/connect.js';
 import cors from 'cors';
 import userRouter from './routes/user.routes.js';
@@ -18,11 +17,12 @@ app.use(cors({
   credentials: true,  // Allow credentials
   allowedHeaders: ['Authorization', 'Content-Type']  // Allow Authorization header
 }));
+app.use(express.urlencoded({ extended: true }));
 
 app.use(jwtCheck);
 
 app.use("/api/v1/users", userRouter);
-app.use("/api/v1/properties", propertyRouter);
+app.use("/api/v1/properties",propertyRouter);
 
 // app.get('/protected',jwtCheck, (req, res) => {
 //   console.log(req.headers.authorization);
