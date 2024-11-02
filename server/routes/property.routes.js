@@ -5,7 +5,7 @@ import {getAllproperties,getPropertyBydetail,createProperty,updateProperty,delet
 const upload = multer({ storage: multer.memoryStorage() });
 const propertyRouter = express.Router();
 
-// propertyRouter.get("/",getAllproperties);
+propertyRouter.get("/",getAllproperties);
 propertyRouter.get("/:id",getPropertyBydetail);
 propertyRouter.post("/", upload.single('image'),createProperty);
 // propertyRouter.patch("/",updateProperty);

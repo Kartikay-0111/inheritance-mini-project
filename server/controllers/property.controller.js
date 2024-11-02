@@ -14,11 +14,33 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const getAllproperties = async (req, res) => {}
-const getPropertyBydetail = async (req, res) => {}
+const getAllproperties = async (req, res) => {
+    try{
+    const properties = await Property.find({});
+    if(!properties) return res.status(400).json({message:"no properties"})
+    res.status(200).json(properties);
+    }
+    catch(err){
+        return res.status(404).json({message: 'Failed to fetch properties', error: error.message})
+    }
+
+
+}
+const getPropertyBydetail = async (req, res) => {
+    try{
+    const {id} = req.params;
+    const property = await User.findById({id});  //this is the unique db id
+    if(!property) return res.status(400).json({message:'property not found'});
+
+    res.status(200).json(property);
+    }
+    catch(err){
+        return res.status(404).json({message: 'Failed to fetch properties', error: error.message})
+    }
+}
 
 const createProperty = async (req, res) => {
- // Store files in memory (temporary)
+
     try{     
         if (!req.auth || !req.auth.payload) {
             return res.status(400).json({ message: "Authentication payload not found" });
@@ -30,7 +52,7 @@ const createProperty = async (req, res) => {
         // // Upload to Cloudinary
         // const photoUrl = await cloudinary.uploader.upload_stream(req.file.buffer, { resource_type: 'auto' });
 
-        const {title,description,propertyType,location,price} = req.body;
+        const {title,description,type,location,price} = req.body;
         const auth0Id = req.auth.payload.sub;
         const photoFile = req.file; 
         
@@ -41,13 +63,12 @@ const createProperty = async (req, res) => {
         // if (!photoFile) {
         //     throw new Error("Photo file not found");
         // }
-       
 
         const user = await User.findOne({auth0Id}).session(session);
         
         if(!user) throw new Error("user not found");
 
-        const photoUpload = await new Promise((resolve, reject) => {
+        const photoUpload = await new Promise((resolve, reject) => {  //upload to cloudinary
             const uploadStream = cloudinary.uploader.upload_stream(
                 { resource_type: 'auto' },
                 (error, result) => {
@@ -69,7 +90,7 @@ const createProperty = async (req, res) => {
         const newProperty = await Property.create({
             title,
             description,
-            propertyType,
+            propertyType:type,
             location,
             price,
             photo: photoUrl,
@@ -87,8 +108,49 @@ const createProperty = async (req, res) => {
     }
    
 }
-const updateProperty = async (req, res) => {}
-const deleteProperty = async (req, res) => {}
+
+const updateProperty = async (req, res) => {
+    const { id } = req.params;
+    const { title, description, type, price, location } = req.body;
+    const { file } = req;
+
+    try {
+        const property = await Property.findById(id);
+        if (!property) return res.status(404).json({ message: 'Property not found' });
+
+        // Update the image if a new file is uploaded
+        if (file) {
+            const uploadResult = await cloudinary.uploader.upload(file.path, { resource_type: 'auto' });
+            property.image = uploadResult.secure_url;
+        }
+
+        // Update other fields
+        property.title = title || property.title;
+        property.description = description || property.description;
+        property.type = type || property.type;
+        property.price = price || property.price;
+        property.location = location || property.location;
+
+        await property.save();
+        res.status(200).json(property);
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating property', error: error.message });
+    }
+
+}
+const deleteProperty = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const property = await Property.findById(id);
+        if (!property) return res.status(404).json({ message: 'Property not found' });
+
+        await property.remove();
+        res.status(200).json({ message: 'Property deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error deleting property', error: error.message });
+    }
+}
 
 export{
     getAllproperties,getPropertyBydetail,createProperty,updateProperty,deleteProperty,

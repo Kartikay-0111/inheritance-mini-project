@@ -2,12 +2,12 @@ import React from 'react';
 
 const PropertyCard = ({ title, description, type, price, location, image }) => {
     return (
-        <div className="bg-white rounded-lg shadow-md p-4 m-4 w-full md:w-1/3 lg:w-1/4">
+        <div className="bg-white rounded-lg shadow-md p-4 m-4">
             {image && (
                 <img
-                    src={URL.createObjectURL(image)}
+                    src={image}
                     alt={title}
-                    className="w-full h-48 object-cover rounded-t-lg"
+                    className="w-48 h-48 object-cover rounded-t-lg"
                 />
             )}
             <div className="p-4">

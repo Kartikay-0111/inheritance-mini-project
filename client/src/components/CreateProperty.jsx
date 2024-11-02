@@ -39,9 +39,9 @@ const CreateProperty = () => {
     for (const key in formData) {
         data.append(key, formData[key]); // Append each form field to the FormData object
     }
-    // for (var pair of data.entries()) {
-    //     console.log(pair[0] + ', ' + pair[1]);
-    // }
+    for (var pair of data.entries()) {
+        console.log(pair[0] + ', ' + pair[1]);
+    }
     try {
         const token = await getAccessTokenSilently({
             audience: 'http://localhost',
