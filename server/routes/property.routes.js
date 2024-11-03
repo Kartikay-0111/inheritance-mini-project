@@ -8,7 +8,7 @@ const propertyRouter = express.Router();
 propertyRouter.get("/",getAllproperties);
 propertyRouter.get("/:id",getPropertyBydetail);
 propertyRouter.post("/", upload.single('image'),createProperty);
-// propertyRouter.patch("/",updateProperty);
+propertyRouter.patch("/:id",upload.single('image'),updateProperty);
 propertyRouter.delete("/:id",deleteProperty);
 
 export default propertyRouter;

@@ -28,14 +28,15 @@ const getAllproperties = async (req, res) => {
 }
 const getPropertyBydetail = async (req, res) => {
     try{
+    // console.log(req.params.id);
     const {id} = req.params;
-    const property = await User.findById({id});  //this is the unique db id
+    const property = await Property.findById(id);  //this is the unique db id
     if(!property) return res.status(400).json({message:'property not found'});
 
     res.status(200).json(property);
     }
     catch(err){
-        return res.status(404).json({message: 'Failed to fetch properties', error: error.message})
+        return res.status(404).json({message: 'Failed to fetch properties', error: err.message})
     }
 }
 
@@ -139,15 +140,29 @@ const updateProperty = async (req, res) => {
 
 }
 const deleteProperty = async (req, res) => {
-    const { id } = req.params;
+   try{
+    const {id} = req.params;
 
-    try {
-        const property = await Property.findById(id);
-        if (!property) return res.status(404).json({ message: 'Property not found' });
+    const property = await Property.findById(id);
+    if (!property) return res.status(404).json({ message: 'Property not found' });
 
-        await property.remove();
-        res.status(200).json({ message: 'Property deleted successfully' });
-    } catch (error) {
+    // Get the user associated with this property
+    const userId = property.creator.toString();
+    
+    await property.deleteOne();
+
+    // Find the user and update their properties list or count
+    const user = await User.findById(userId);
+    if (user) {
+        // deleting the property frm user properties
+        user.allproperties = user.allproperties.filter((propertyId) => propertyId.toString() !== id);
+
+        await user.save();
+
+    }
+    res.status(200).json({ message: 'Property deleted successfully' });
+}
+    catch(error){
         res.status(500).json({ message: 'Error deleting property', error: error.message });
     }
 }

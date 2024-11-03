@@ -4,7 +4,7 @@ import Navbar from './components/navbar'
 import Sidebar from './components/sidebar'
 import Dashboard from './components/dashboard';
 import Profile from './components/profile';
-import CreateProperty from "./components/Createproperty.jsx";
+import CreateProperty from "./components/CreateProperty.jsx";
 import Property from './components/property';
 import Setting from './components/Setting';
 import UserCreationForm from './components/usercreateform';

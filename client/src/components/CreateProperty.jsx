@@ -48,9 +48,6 @@ const CreateProperty = () => {
             scope: 'openid profile email',
           });
           console.log(token);
-
-
-       
         const response = await axios.post(
             'http://localhost:3000/api/v1/properties',
             data,
@@ -63,10 +60,8 @@ const CreateProperty = () => {
 
         const json = await response.data;
         console.log(json);
-        if (!response.ok) {
-            setError(json.error)
-        }
-        if (response.ok) {
+    
+        if (response.status===200) {
             setFormData({
                 title: '',
                 description: '',
@@ -75,18 +70,21 @@ const CreateProperty = () => {
                 location: '',
                 image: null,
             });
-            setIssubmitted(true)
+            setIssubmitted(true);
+            window.location.reload();
+          
         }
+        setError(json.error)
     } catch (error) {
         setError(error.message);
     }
+
    
 } 
-if(isSubmitted){
-    return <Navigate to="/property" />;
-}
+
     return (
-        <form className="w-full p-4 bg-gray-100 rounded-lg shadow-md">
+        <div className="flex flex-col items-center">
+        <form className="w-3/4 p-4 bg-gray-100 rounded-lg shadow-md">
             <div className="mb-4">
                 <label className="block text-gray-700 font-semibold mb-2">Property Title</label>
                 <input
@@ -167,6 +165,7 @@ if(isSubmitted){
                 Submit
             </button>
         </form>
+    </div>
     );
 };
 
