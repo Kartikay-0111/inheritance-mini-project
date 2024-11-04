@@ -34,6 +34,12 @@ export default function Sidebar() {
           </NavLink>
         </li>
         <li>
+          <NavLink to="/agents" className="w-full flex items-center">
+            <FaUser />
+            <span>Agents</span>
+          </NavLink>
+        </li>
+        <li>
           {user ? <LogoutButton /> : <LoginButton />}
         </li>
       </ul>

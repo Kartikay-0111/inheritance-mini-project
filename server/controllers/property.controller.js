@@ -23,8 +23,6 @@ const getAllproperties = async (req, res) => {
     catch(err){
         return res.status(404).json({message: 'Failed to fetch properties', error: error.message})
     }
-
-
 }
 const getPropertyBydetail = async (req, res) => {
     try{
@@ -121,14 +119,28 @@ const updateProperty = async (req, res) => {
 
         // Update the image if a new file is uploaded
         if (file) {
-            const uploadResult = await cloudinary.uploader.upload(file.path, { resource_type: 'auto' });
-            property.image = uploadResult.secure_url;
+            const uploadResult = await new Promise((resolve, reject) => {
+                const uploadStream = cloudinary.uploader.upload_stream(
+                    { resource_type: 'auto' },
+                    (error, result) => {
+                        if (error) {
+                            reject(error);
+                        } else {
+                            resolve(result);
+                        }
+                    }
+                );
+                const bufferStream = new stream.PassThrough();
+                bufferStream.end(file.buffer);
+                bufferStream.pipe(uploadStream);
+            });
+            property.photo = uploadResult.secure_url;
         }
 
         // Update other fields
         property.title = title || property.title;
         property.description = description || property.description;
-        property.type = type || property.type;
+        property.propertyType = type || property.propertyType;
         property.price = price || property.price;
         property.location = location || property.location;
 
@@ -137,7 +149,6 @@ const updateProperty = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: 'Error updating property', error: error.message });
     }
-
 }
 const deleteProperty = async (req, res) => {
    try{

@@ -46,8 +46,6 @@ const PropertyCard = ({id ,title, description, type, price, location, image}) =>
             <UpdateProperty id={id} onClose={() => setIsEditing(false)} />
         ) : (
         <div className="bg-white rounded-lg shadow-md p-4 m-4 w-56">
-       
-            
             {image && (
                 <img
                     src={image}

@@ -8,6 +8,7 @@ import CreateProperty from "./components/CreateProperty.jsx";
 import Property from './components/property';
 import Setting from './components/Setting';
 import UserCreationForm from './components/usercreateform';
+import Agents from './components/All_agents.jsx';
 
 function App() {
 
@@ -16,13 +17,14 @@ function App() {
 
       <Route path="/" element={<Root />}  >
         <Route path='/profile' index element={<Profile />} />
-
         <Route path='/' index element={<Dashboard />}  />
         <Route path='/dashboard' element={<Dashboard/>}/>
         <Route path='/profile' element={<Profile />} />
         <Route path='/property' element={<Property />}  />
         <Route path='/property-form' element={<CreateProperty/>}/>
         <Route path='/user-form' element={<UserCreationForm/>}/>
+        <Route path='/setting' element={<Setting/>}/>
+        <Route path='/agents' element={<Agents/>}/>
       </Route>
     )
   );

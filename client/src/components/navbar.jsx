@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { FaSearch,FaUmbrella } from 'react-icons/fa';
 import { yariga, logo } from '../assets';
 import { useAuth0 } from '@auth0/auth0-react';
+import placeHolderimage from '../assets/avatar.png'
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
  const {user,isAuthenticated}  =useAuth0()
@@ -41,7 +42,7 @@ const Navbar = () => {
         <div className='flex flex-row gap-3'>
         <FaSearch className='text-white m-auto h-7 w-7' />
         <input type="text" placeholder='Search propreties..'/>
-        {isAuthenticated && <img className='h-5/6 w-9' src={user.picture} alt="profile" />}
+        {isAuthenticated && <img className='h-5/6 w-9' src={user.picture || placeHolderimage} alt="profile" />}
         {isAuthenticated && <p className='text-white'>{user.name}</p>}
         </div> 
       </div>
