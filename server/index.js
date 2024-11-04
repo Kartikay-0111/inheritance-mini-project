@@ -5,8 +5,7 @@ import connectDB from './database/connect.js';
 import cors from 'cors';
 import userRouter from './routes/user.routes.js';
 import propertyRouter from './routes/property.routes.js';
-import axios from 'axios'
-import {auth} from 'express-oauth2-jwt-bearer';
+import axios from 'axios';
 import jwtCheck from './middleware/jwtcheck.js';
 dotenv.config()
 const app = express();
@@ -41,6 +40,3 @@ mongoose.connect(process.env.MONGODB_URI)
   .catch((err) => {
     console.log(err)
   }) 
-
-
-
