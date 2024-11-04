@@ -3,9 +3,8 @@ import { getAllUsers,createUser,getUserById } from "../controllers/user.controll
 import jwtCheck from "../middleware/jwtcheck.js";
 
 const userRouter = express.Router();
-// userRouter.use(jwtCheck);
 
-// userRouter.get("/",getAllUsers)
+userRouter.get("/",getAllUsers)
 userRouter.get("/:id",getUserById)
 userRouter.post("/",createUser)
 
