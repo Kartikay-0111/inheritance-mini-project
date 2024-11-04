@@ -22,7 +22,6 @@ createRoot(document.getElementById('root')).render(
         audience: "http://localhost",
         scope: "openid profile email",
       }}
-      // onRedirectCallback={onRedirectCallback}
     >
       <App />
     </Auth0Provider>
